@@ -28,7 +28,7 @@ RARE_AGGRESSION_FOLDER = os.path.join(BASE_DIR, "static", "Rares", "Aggression")
 RARE_VIGILANCE_FOLDER = os.path.join(BASE_DIR, "static", "Rares", "Vigilance")
 RARE_HEROISM_FOLDER = os.path.join(BASE_DIR, "static", "Rares", "Heroism")
 RARE_VILLAINY_FOLDER = os.path.join(BASE_DIR, "static", "Rares", "Villainy")
-RARE_NEUTRAL_FOLDER = os.path.join(BASE_DIR, "static", "Rares", "Neutral")
+#RARE_NEUTRAL_FOLDER = os.path.join(BASE_DIR, "static", "Rares", "Neutral")
 
 LEGENDARY_COMMAND_FOLDER = os.path.join(BASE_DIR, "static", "Legendary", "Command")
 LEGENDARY_CUNNING_FOLDER = os.path.join(BASE_DIR, "static", "Legendary", "Cunning")
@@ -129,14 +129,14 @@ def GetRare():
     vigilance_files = [f for f in os.listdir(RARE_VIGILANCE_FOLDER) if f.lower().endswith(('png','jpg','jpeg','gif','webp'))]
     heroism_files = [f for f in os.listdir(RARE_HEROISM_FOLDER) if f.lower().endswith(('png','jpg','jpeg','gif','webp'))]
     villainy_files = [f for f in os.listdir(RARE_VILLAINY_FOLDER) if f.lower().endswith(('png','jpg','jpeg','gif','webp'))]
-    neutral_files = [f for f in os.listdir(RARE_NEUTRAL_FOLDER) if f.lower().endswith(('png','jpg','jpeg','gif','webp'))]
+    #neutral_files = [f for f in os.listdir(RARE_NEUTRAL_FOLDER) if f.lower().endswith(('png','jpg','jpeg','gif','webp'))]
     random.shuffle(command_files)
     random.shuffle(cunning_files)
     random.shuffle(aggression_files)
     random.shuffle(vigilance_files)
     random.shuffle(heroism_files)
     random.shuffle(villainy_files)
-    random.shuffle(neutral_files)
+    #random.shuffle(neutral_files)
     #selected = files[:15]
     combined_remaining = []
     for folder_name, files in [
@@ -146,7 +146,7 @@ def GetRare():
       ("RareVigilance", vigilance_files),
       ("RareHeroism", heroism_files),
       ("RareVillainy", villainy_files),
-      ("RareNeutral", neutral_files),
+      #("RareNeutral", neutral_files),
     ]:
       combined_remaining.extend([(folder_name, f) for f in files])
 
@@ -229,7 +229,7 @@ def serve_image(folder,filename):
     "RareVigilance":RARE_VIGILANCE_FOLDER,
     "RareHeroism":RARE_HEROISM_FOLDER,
     "RareVillainy":RARE_VILLAINY_FOLDER,
-    "RareNeutral":RARE_NEUTRAL_FOLDER,
+    #"RareNeutral":RARE_NEUTRAL_FOLDER,
     "LegendaryCommand":LEGENDARY_COMMAND_FOLDER,
     "LegendaryCunning":LEGENDARY_CUNNING_FOLDER,
     "LegendaryAggression":LEGENDARY_AGGRESSION_FOLDER,
