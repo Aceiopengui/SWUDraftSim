@@ -188,22 +188,37 @@ def GetLegendary():
 
     return selected
 
-@app.route('/')
-def index():
-  #Where the magic happens (Or rather where the SWU happens)
+def GeneratePack():
   legendaryChance=random.randrange(1,7)
   selectedCommons=GetCommons()
   selectedUncommons=GetUncommons()
   selected=[]
   selected.extend(selectedCommons)
   selected.extend(selectedUncommons)
+  table=[]
   if legendaryChance==6:
     selectedLegendary=GetLegendary()
     selected.extend(selectedLegendary)
   else:
      selectedRare=GetRare()
      selected.extend(selectedRare)
-  return render_template("Draftsim.html", images=selected)
+  return selected
+
+@app.route('/')
+def index():
+  #Where the magic happens (Or rather where the SWU happens)
+  pack1=GeneratePack()
+  pack2=GeneratePack()
+  pack3=GeneratePack()
+  pack4=GeneratePack()
+  pack5=GeneratePack()
+  pack6=GeneratePack()
+  pack7=GeneratePack()
+  pack8=GeneratePack()
+  tablePacks=[pack1,pack2,pack3,pack4,pack5,pack6,pack7,pack8]
+  currentPack=tablePacks[0]
+
+  return render_template("Draftsim.html", images=currentPack)
 
 # Route to serve images directly from the folder. If you want to add more to this you gotta do the folder stuff at the top
 @app.route('/images/<folder>/<path:filename>')
