@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Image Grid with Click-to-Move and Preview</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #111;
+      font-family: sans-serif;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      gap: 1rem;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    /* Main grid on the left */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(3, auto);
+      gap: 1px;
+      width: 70vw;
+      height: 95vh;
+      background-color: transparent;
+      border-radius: 1px;
+      padding: 1px;
+      box-sizing: border-box;
+      overflow: auto;
+    }
+
+    .grid-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background-color: transparent;
+      border-radius: 1px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.2s ease;
+    }
+
+    .grid-container img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Selected cards on the right */
+    .selected-container {
+      width: 25vw;
+      height: 80vh;
+      background-color: #222;
+      border-radius: 6px;
+      padding: 10px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 10px;
+      align-content: start;
+    }
+
+    .selected-container h2 {
+      color: #eee;
+      margin-top: 0;
+      font-size: 1.1rem;
+      grid-column: 1 / -1;
+      text-align: center;
+      user-select: none;
+    }
+
+    .selected-container img {
+      width: 100%;
+      height: auto;
+      max-height: 80px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: none;
+      user-select: none;
+      cursor: default;
+    }
+
+    .image-preview {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      display: none;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      background-color: #000;
+      padding: 4px;
+    }
+
+    .image-preview img {
+      display: block;
+      max-width: 450px;
+      max-height: 450px;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-container">
+    {% for folder, filename in images %}
+      <img src="{{ url_for('serve_image', folder=folder, filename=filename) }}" alt="Image">
+    {% endfor %}
+
+  </div>
+
+  <div class="selected-container">
+    <h2>Selected Cards</h2>
+    <!-- Chosen Cards show up here -->
+  </div>
+
+  <!-- Hover preview cards -->
+  <div class="image-preview" id="imagePreview">
+    <img src="" alt="Preview" />
+  </div>
+
+  <script>
+    const grid = document.querySelector('.grid-container');
+    const selected = document.querySelector('.selected-container');
+    const preview = document.getElementById('imagePreview');
+    const previewImg = preview.querySelector('img');
+
+    const commonFolder = "Commons/";
+     
+
+    // Function to move cards from draft table to selected
+    grid.querySelectorAll('img').forEach(img => {
+      img.addEventListener('click', function onClick() {
+        grid.removeChild(img);
+        img.removeEventListener('click', onClick);
+        img.style.cursor = 'default';
+        selected.appendChild(img);
+
+        // Add hover preview to selected cards
+        img.addEventListener('mouseenter', () => {
+          previewImg.src = img.src;
+          preview.style.display = 'block';
+        });
+
+        img.addEventListener('mouseleave', () => {
+          preview.style.display = 'none';
+        });
+
+        img.addEventListener('mousemove', (e) => {
+          preview.style.left = e.pageX + 15 + 'px';
+          preview.style.top = e.pageY + 15 + 'px';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
