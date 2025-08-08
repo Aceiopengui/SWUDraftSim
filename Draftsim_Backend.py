@@ -38,6 +38,7 @@ LEGENDARY_HEROISM_FOLDER = os.path.join(BASE_DIR, "Static", "Legendary", "Herois
 LEGENDARY_VILLAINY_FOLDER = os.path.join(BASE_DIR, "Static", "Legendary", "Villainy")
 LEGENDARY_NEUTRAL_FOLDER = os.path.join(BASE_DIR, "Static", "Legendary", "Neutral")
 
+#Get commons, uncommons are similar below
 def GetCommons():
     command_files = [f for f in os.listdir(COMMAND_FOLDER) if f.lower().endswith(('png','jpg','jpeg','gif','webp'))]
     cunning_files = [f for f in os.listdir(CUNNING_FOLDER) if f.lower().endswith(('png','jpg','jpeg','gif','webp'))]
